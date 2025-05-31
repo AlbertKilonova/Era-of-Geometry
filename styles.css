@@ -42,7 +42,7 @@ body {
   align-items: center;
   overflow: hidden;
   position: relative;
-  padding: 0.2vw;
+  padding: 0.2em;
   margin-top: 2em;
   border: 0.1em solid #3d5670;
   background-color: #0a111a;
@@ -57,7 +57,7 @@ body {
 
 .nav-item {
   padding: 0.4em 1em;
-  margin-right: 0.4em;
+  margin-right: 0;
   cursor: pointer;
   position: relative;
   z-index: 1;

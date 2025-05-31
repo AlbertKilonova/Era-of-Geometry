@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (activeItem && sliderBar) {
       const rect = activeItem.getBoundingClientRect();
       sliderBar.style.width = `${rect.width}px`;
-      sliderBar.style.left = `${rect.left}px`;
+      sliderBar.style.left = `${rect.left-9}px`;
     }
   }
 
