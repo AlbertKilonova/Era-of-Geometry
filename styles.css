@@ -93,11 +93,39 @@ body {
   display: block;
 }
 
+h2 {
+  font-size: 2.5vw;
+  border-bottom: 0.06em solid #eee;
+  padding-bottom: 0.4em;
+  margin-bottom: 0.4em;
+  position: relative;
+  transition: all 180ms ease;
+}
+
+h2:hover {
+  border-bottom-color: #66b3ff;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  width: 2em;
+  height: 0.08em;
+  background: #66b3ff;
+  bottom: -0.06em;
+  left: 0;
+  transition: all 180ms ease;
+}
+
+h2:hover::after {
+  width: 100%;
+}
+
 a {
   color: #eee;
   text-decoration: none;
   position: relative;
-  transition: color 0.3s ease;
+  transition: color 180ms ease;
 }
 
 a::before {
@@ -116,4 +144,50 @@ a::before {
 a:hover::before {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+/* 帖子容器样式 */
+.post {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  opacity: 0;
+  /* 初始状态为透明 */
+  transform: translateY(20px);
+  /* 初始状态向上偏移 */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  /* 定义过渡动画 */
+}
+
+/* 帖子进入动画 */
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 帖子退出动画 */
+@keyframes slide-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* 帖子默认进入动画 */
+.post {
+  animation: slide-in 0.5s ease forwards;
 }
