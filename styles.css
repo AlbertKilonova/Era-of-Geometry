@@ -9,17 +9,17 @@ body {
 }
 
 #title {
-  padding-top:0.2em;
-  padding:0.4em;
+  padding-top: 0.2em;
+  padding: 0.4em;
   height: 3vw;
   font-size: 3.4vw;
   letter-spacing: 0.05em;
   text-align: center;
-  font-style:italic;
+  font-style: italic;
   border-radius: 0 0 0.25em 0.25em;
   text-shadow: 0.05em 0.05em 0px #3d5670;
   background-color: #0a111a;
-  border:0 solid #eee;
+  border: 0 solid #eee;
   box-shadow: 0 0 5px #3d5670;
   transition: all 180ms;
 }
@@ -31,7 +31,7 @@ body {
 #title:hover {
   text-shadow: 0 0 0px #3d5670;
   box-shadow: 0 0 0px #eee;
-  border:0.01em solid #3d5670;
+  border: 0.01em solid #3d5670;
 }
 
 .slider-navigation {
@@ -95,7 +95,7 @@ body {
 
 .top {
   text-align: center;
-  animation: fadeIn-top 360ms ease-out forwards;
+  animation: fadeIn-top 360ms ease forwards;
 }
 
 @keyframes fadeIn {
@@ -103,7 +103,7 @@ body {
     opacity: 0;
     transform: translateY(1em);
   }
-
+  
   to {
     opacity: 1;
     transform: translateY(0px);
@@ -198,7 +198,7 @@ a:hover::before {
     opacity: 0;
     transform: translateY(20px);
   }
-
+  
   to {
     opacity: 1;
     transform: translateY(0);
@@ -211,7 +211,7 @@ a:hover::before {
     opacity: 1;
     transform: translateY(0);
   }
-
+  
   to {
     opacity: 0;
     transform: translateY(20px);
