@@ -1,10 +1,9 @@
 * {
-  margin:0;
-  padding:0;
   font-size: 2vw;
 }
 
 body {
+  margin-top: 0;
   color: #eee;
   background-color: #0f1b2b;
 }
@@ -36,7 +35,6 @@ body {
 }
 
 .slider-navigation {
-  margin-top:2em;
   font-size: 0.4em;
   border-radius: 1em;
   display: flex;
@@ -45,6 +43,7 @@ body {
   overflow: hidden;
   position: relative;
   padding: 0.2vw;
+  margin-top: 2em;
   border: 0.1em solid #3d5670;
   background-color: #0a111a;
 }
@@ -57,8 +56,8 @@ body {
 }
 
 .nav-item {
-  padding: 5px 10px;
-  margin-right: 10px;
+  padding: 0.4em 1em;
+  margin-right: 0.4em;
   cursor: pointer;
   position: relative;
   z-index: 1;
