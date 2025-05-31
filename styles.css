@@ -196,23 +196,24 @@ a:hover::before {
 
 @keyframes bounce {
   0%, 100% { 
-    transform: translateY(0) scale(1, 1); 
+    transform: translateY(0) scale(1, 1);
   }
   25% { 
-    transform: translateY(-0.4em) scale(0.9, 1.1); 
+    transform: translateY(-0.4em) scale(0.9, 1.1);
   }
   50% { 
-    transform: translateY(0) scale(1, 0.95); /* 落地压扁效果 */
+    transform: translateY(0) scale(1, 0.95);
   }
   75% { 
-    transform: translateY(-0.2em) scale(0.98, 1.02); 
+    transform: translateY(-0.2em) scale(0.98, 1.02);
   }
 }
 
 .to-top::before {
-  content: '♢';
+  content: '◆';
   padding-right: 0.2em;
-  color: #66b3ff;
+  color: #eee;
+  text-shadow: 0 0 0.4em #66b3ff;
   display: inline-block;
 }
 
