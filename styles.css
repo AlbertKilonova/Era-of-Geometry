@@ -149,6 +149,10 @@ h2:hover::after {
   width: 100%;
 }
 
+h2::before {
+  content: "◆";
+}
+
 h3 {
   font-size: 2.4vw;
   border-bottom: 0.06em solid #eee;
