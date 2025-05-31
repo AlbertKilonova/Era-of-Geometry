@@ -95,6 +95,7 @@ body {
 
 .top {
   text-align: center;
+  padding-bottom: 1em;
   animation: fadeIn-top 360ms ease forwards;
 }
 
@@ -148,6 +149,14 @@ h2:hover::after {
   width: 100%;
 }
 
+h3 {
+  font-size: 2.4vw;
+  border-bottom: 0.06em solid #eee;
+  padding-bottom: 0.4em;
+  margin-bottom: 0.4em;
+  transition: all 180ms ease;
+}
+
 ul {
   padding-left: 1em;
 }
@@ -177,48 +186,36 @@ a:hover::before {
   transform-origin: left;
 }
 
-/* 帖子容器样式 */
-.post {
-  margin-bottom: 20px;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  opacity: 0;
-  /* 初始状态为透明 */
-  transform: translateY(20px);
-  /* 初始状态向上偏移 */
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  /* 定义过渡动画 */
+.announcement {
+  margin-bottom: 1em;
+  padding: 0.1em 1em;
+  border-radius: 0.4em;
+  border: 0.1em solid #3d5670;
+  background-color: #0a111a;
 }
 
-/* 帖子进入动画 */
-@keyframes slide-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+@keyframes bounce {
+  0%, 100% { 
+    transform: translateY(0) scale(1, 1); 
   }
-  
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  25% { 
+    transform: translateY(-0.4em) scale(0.9, 1.1); 
+  }
+  50% { 
+    transform: translateY(0) scale(1, 0.95); /* 落地压扁效果 */
+  }
+  75% { 
+    transform: translateY(-0.2em) scale(0.98, 1.02); 
   }
 }
 
-/* 帖子退出动画 */
-@keyframes slide-out {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  to {
-    opacity: 0;
-    transform: translateY(20px);
-  }
+.to-top::before {
+  content: '♢';
+  padding-right: 0.2em;
+  color: #66b3ff;
+  display: inline-block;
 }
 
-/* 帖子默认进入动画 */
-.post {
-  animation: slide-in 0.5s ease forwards;
+.to-top:hover::before {
+  animation: bounce 800ms infinite ease-in-out;
 }
