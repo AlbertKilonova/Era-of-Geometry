@@ -4,11 +4,48 @@ document.addEventListener('DOMContentLoaded', function() {
   const sliderBar = document.querySelector('.slider-bar');
   const backToTopBtn = document.getElementById('backToTop');
   const navigationBar = document.querySelector('.slider-navigation');
+  const themeToggle = document.getElementById('themeToggle');
   
-  if (!sliderBar) {
-    console.error('Slider bar not found!');
+  // 检查本地存储中的暗色模式设置
+  const isDarkMode = localStorage.getItem('darkMode') === 'true';
+  if (isDarkMode) {
+    document.body.classList.add('dark-mode');
+    themeToggle.innerHTML = '<i class="material-icons">light_mode</i>';
   }
   
+  // 切换暗色模式
+  themeToggle.addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+    
+    // 更新图标
+    if (document.body.classList.contains('dark-mode')) {
+      themeToggle.innerHTML = '<i class="material-icons">light_mode</i>';
+      localStorage.setItem('darkMode', 'true');
+    } else {
+      themeToggle.innerHTML = '<i class="material-icons">dark_mode</i>';
+      localStorage.setItem('darkMode', 'false');
+    }
+    
+    // 添加波纹效果
+    const ripple = document.createElement('div');
+    ripple.classList.add('ripple-effect');
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height) * 1.5;
+    const x = event.clientX - rect.left - size/2;
+    const y = event.clientY - rect.top - size/2;
+    
+    ripple.style.width = ripple.style.height = `${size}px`;
+    ripple.style.left = `${x}px`;
+    ripple.style.top = `${y}px`;
+    
+    this.appendChild(ripple);
+    
+    setTimeout(() => {
+      ripple.remove();
+    }, 700);
+  });
+  
+  // 导航功能
   function updateSliderPosition() {
     const activeItem = document.querySelector('.nav-item.active');
     if (activeItem && sliderBar) {
@@ -44,12 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
       // 添加波纹效果
       const ripple = document.createElement('div');
       ripple.classList.add('ripple-effect');
-      ripple.style.position = 'absolute';
-      ripple.style.borderRadius = '50%';
-      ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-      ripple.style.transform = 'scale(0)';
-      ripple.style.animation = 'ripple 0.7s linear';
-      
       const rect = this.getBoundingClientRect();
       const size = Math.max(rect.width, rect.height);
       const x = event.clientX - rect.left - size/2;
@@ -68,41 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   window.addEventListener('resize', updateSliderPosition);
-  
-  // 添加几何元素悬浮动画
-  const shapes = document.querySelectorAll('.floating');
-  shapes.forEach(shape => {
-    const delay = Math.random() * 3;
-    shape.style.animationDelay = `${delay}s`;
-  });
-  
-  // 添加波纹效果事件监听
-  document.querySelectorAll('.ripple').forEach(element => {
-    element.addEventListener('mousedown', function(e) {
-      const ripple = document.createElement('div');
-      ripple.classList.add('ripple-effect');
-      ripple.style.position = 'absolute';
-      ripple.style.borderRadius = '50%';
-      ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-      ripple.style.transform = 'scale(0)';
-      ripple.style.animation = 'ripple 0.7s linear';
-      
-      const rect = this.getBoundingClientRect();
-      const size = Math.max(rect.width, rect.height) * 1.5;
-      const x = e.clientX - rect.left - size/2;
-      const y = e.clientY - rect.top - size/2;
-      
-      ripple.style.width = ripple.style.height = `${size}px`;
-      ripple.style.left = `${x}px`;
-      ripple.style.top = `${y}px`;
-      
-      this.appendChild(ripple);
-      
-      setTimeout(() => {
-        ripple.remove();
-      }, 700);
-    });
-  });
   
   // 返回顶部按钮功能
   if (backToTopBtn) {
@@ -144,4 +140,4 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 初始检查
   checkNavVisibility();
-});
+}); 

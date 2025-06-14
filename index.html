@@ -1,19 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Era of Geometry</title>
-  <link rel="stylesheet" href="css/styles.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
-  
+  <!-- 标题区域 -->
   <div id="title">
+    <div class="geometric-shapes">
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
+    
+    <!-- 暗色模式切换按钮 -->
+    <div class="theme-toggle ripple" id="themeToggle">
+      <i class="material-icons">dark_mode</i>
+    </div>
+    
     <h1>Era of Geometry</h1>
-    <div class="subtitle">几何纪元 · 创造无限可能</div>
+    <div class="subtitle">创造无限可能</div>
   </div>
   
+  <!-- 导航栏 -->
   <div class="slider-navigation">
     <div class="nav-container">
       <div class="nav-item active ripple" data-target="home">
@@ -40,15 +56,179 @@
     </div>
   </div>
   
+  <!-- 内容容器 -->
   <div class="content-container">
+    <!-- 首页内容 -->
+    <section id="home" class="content active">
+      <h2 class="section-title">欢迎来到 · Era of Geometry</h2>
+      <p>创造无限可能。</p>
+      <p>Era of Geometry是一个泛技能创作团体。</p>
+      <p>我们涉及的领域包括但不限于：</p>
+      <ul class="home-list">
+        <li>
+          <i class="material-icons">animation</i>
+          <span>动画</span>
+        </li>
+        <li>
+          <i class="material-icons">brush</i>
+          <span>绘画</span>
+        </li>
+        <li>
+          <i class="material-icons">code</i>
+          <span>编程</span>
+        </li>
+        <li>
+          <i class="material-icons">music_note</i>
+          <span>编曲</span>
+        </li>
+        <li>
+          <i class="material-icons">movie</i>
+          <span>剪辑</span>
+        </li>
+      </ul>
+    </section>
     
+    <!-- 公告内容 -->
+    <section id="announcement" class="content">
+      <h2 class="section-title">公告</h2>
+      
+      <div class="announcement-list">
+        <div class="announcement">
+          <div class="announcement-date">2025年6月14日</div>
+          <h3 class="announcement-title">建站中</h3>
+          <p class="announcement-content">建站中，敬请期待</p>
+        </div>
+        
+        <div class="announcement">
+          <div class="announcement-date">2023年10月8日</div>
+          <h3 class="announcement-title">占位公告</h3>
+          <p class="announcement-content">占位公告</p>
+        </div>
+        
+        <div class="announcement">
+          <div class="announcement-date">2023年9月28日</div>
+          <h3 class="announcement-title">开源项目发布</h3>
+          <p class="announcement-content">我们的几何算法库GeoLib 1.0正式开源，欢迎开发者使用和贡献代码。</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 成员内容 -->
+    <section id="member" class="content">
+      <h2 class="section-title">团队成员</h2>
+      
+      <div class="card-grid">
+        <div class="card member">
+          <div class="member-card">
+            <div class="member-avatar">L</div>
+            <div class="member-info">
+              <div class="member-name">李几何</div>
+              <div class="member-role">创始人 & 首席设计师</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card member">
+          <div class="member-card">
+            <div class="member-avatar">W</div>
+            <div class="member-info">
+              <div class="member-name">王创新</div>
+              <div class="member-role">技术总监</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card member">
+          <div class="member-card">
+            <div class="member-avatar">Z</div>
+            <div class="member-info">
+              <div class="member-name">张艺术</div>
+              <div class="member-role">创意总监</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card member">
+          <div class="member-card">
+            <div class="member-avatar">S</div>
+            <div class="member-info">
+              <div class="member-name">孙算法</div>
+              <div class="member-role">高级工程师</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 作品内容 -->
+    <section id="opus" class="content">
+      <h2 class="section-title">作品展示</h2>
+      
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-image"></div>
+          <div class="card-content">
+            <h3>分形宇宙</h3>
+            <p>利用分形几何原理创作的数字艺术，展现几何结构的无限递归之美。</p>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-image"></div>
+          <div class="card-content">
+            <h3>拓扑城市</h3>
+            <p>基于拓扑学原理设计的未来城市概念模型，重新定义城市空间结构。</p>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-image"></div>
+          <div class="card-content">
+            <h3>几何光影</h3>
+            <p>通过几何形体与光线交互，创造独特的视觉体验。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 项目内容 -->
+    <section id="project" class="content">
+      <h2 class="section-title">进行中的项目</h2>
+      
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-image"></div>
+          <div class="card-content">
+            <h3>GeoVision</h3>
+            <p>利用计算机视觉技术解析现实世界中的几何结构，应用于建筑测绘和艺术创作。</p>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-image"></div>
+          <div class="card-content">
+            <h3>几何教育平台</h3>
+            <p>开发交互式几何学习平台，让几何学习更加直观有趣。</p>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-image"></div>
+          <div class="card-content">
+            <h3>算法艺术生成器</h3>
+            <p>基于几何算法的艺术创作工具，帮助艺术家探索新的创作形式。</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
   
+  <!-- 返回顶部按钮 -->
   <div class="fab ripple" id="backToTop">
     <i class="material-icons">arrow_upward</i>
   </div>
-
-  <script src="JavaScript/content.js"></script>
+  
   <script src="JavaScript/script.js"></script>
 </body>
+
 </html>
