@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Era of Geometry</title>
+  <link href="https://cdn.bootcdn.net/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcdn.net/ajax/libs/fonts-roboto/2.0.0/css/roboto.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- 粒子背景 -->
+  <div id="particles-js"></div>
+  
+  <!-- 标题区域 -->
+  <div id="title">
+    <h1>Era of Geometry</h1>
+    <div class="subtitle">超越·突破</div>
+  </div>
+  
+  <!-- 导航区域 -->
+  <div class="slider-navigation">
+    <div class="nav-container">
+      <div class="nav-item active ripple" data-target="home">
+        <i class="material-icons">home</i>
+        <span>首页</span>
+      </div>
+      <div class="nav-item ripple" data-target="announcement">
+        <i class="material-icons">announcement</i>
+        <span>公告</span>
+      </div>
+      <div class="nav-item ripple" data-target="member">
+        <i class="material-icons">people</i>
+        <span>成员</span>
+      </div>
+      <div class="nav-item ripple" data-target="opus">
+        <i class="material-icons">collections</i>
+        <span>作品</span>
+      </div>
+      <div class="nav-item ripple" data-target="project">
+        <i class="material-icons">rocket_launch</i>
+        <span>项目</span>
+      </div>
+      <div class="slider-bar"></div>
+    </div>
+  </div>
+  
+  <!-- 内容容器 -->
+  <div class="content-container">
+    <div id="home" class="content active">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <p>正在加载内容...</p>
+      </div>
+    </div>
+    
+    <div id="announcement" class="content">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <p>正在加载公告...</p>
+      </div>
+    </div>
+    
+    <div id="member" class="content">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <p>正在加载成员信息...</p>
+      </div>
+    </div>
+    
+    <div id="opus" class="content">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <p>正在加载作品...</p>
+      </div>
+    </div>
+    
+    <div id="project" class="content">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <p>正在加载项目...</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 返回顶部按钮 -->
+  <div class="fab ripple" id="backToTop">
+    <i class="material-icons">arrow_upward</i>
+  </div>
+  
+  <!-- 页脚 -->
+  <div class="footer">
+    <p>几何纪元 © 2023 - 探索艺术与科技的无限可能</p>
+    <div class="social-links">
+      <a href="#" class="ripple"><i class="material-icons">forum</i></a>
+      <a href="#" class="ripple"><i class="material-icons">public</i></a>
+      <a href="#" class="ripple"><i class="material-icons">code</i></a>
+      <a href="#" class="ripple"><i class="material-icons">play_circle</i></a>
+      <a href="#" class="ripple"><i class="material-icons">palette</i></a>
+    </div>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script src="JavaScript/content.js"></script>
+  <script src="JavaScript/script.js"></script>
+</body>
+</html>
