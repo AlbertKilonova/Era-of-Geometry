@@ -21,8 +21,6 @@
   font-family: 'Roboto', 'Segoe UI', 'Microsoft YaHei', sans-serif;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-
 body {
   background: var(--primary);
   min-height: 100vh;
@@ -246,10 +244,11 @@ li::before {
   box-shadow: var(--elevation-1);
   position: relative;
   overflow: hidden;
+  transform: translateY(0);
 }
 
 .skill-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
   box-shadow: var(--elevation-3);
 }
 
@@ -394,7 +393,7 @@ li::before {
 /* 浮动操作按钮 - 返回顶部 */
 .fab {
   position: fixed;
-  bottom: -60px; /* 初始位置在屏幕下方不可见 */
+  bottom: -60px;
   right: 30px;
   width: 56px;
   height: 56px;
@@ -415,7 +414,7 @@ li::before {
 .fab.visible {
   opacity: 1;
   transform: translateY(0);
-  bottom: 30px; /* 显示时从底部滑入 */
+  bottom: 30px;
 }
 
 .fab i {
@@ -513,4 +512,214 @@ li::before {
   .fab.visible {
     bottom: 15px;
   }
+}
+
+/* 新增卡片样式 */
+.content-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--elevation-1);
+  transition: all 0.3s ease;
+  transform: translateY(0);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.content-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--elevation-2);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(3, 218, 198, 0.2);
+}
+
+.card-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: rgba(3, 218, 198, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  font-size: 24px;
+  color: var(--accent);
+}
+
+.card-title {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--accent-light);
+}
+
+.card-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.card-content {
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.tag {
+  background: rgba(3, 218, 198, 0.15);
+  color: var(--accent-light);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-secondary);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(3, 218, 198, 0.3);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 粒子背景 */
+#particles-js {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -2;
+}
+
+/* 列表样式 */
+.content-list {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.list-title {
+  font-size: 1.3rem;
+  color: var(--accent-light);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.list-title::before {
+  content: "◆";
+  color: var(--accent);
+  margin-right: 10px;
+  font-size: 1rem;
+}
+
+.styled-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.styled-list li {
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  position: relative;
+  padding-left: 35px;
+  transition: all 0.3s ease;
+}
+
+.styled-list li:hover {
+  background: rgba(3, 218, 198, 0.1);
+  transform: translateX(5px);
+}
+
+.styled-list li::before {
+  content: "◇";
+  position: absolute;
+  left: 15px;
+  color: var(--accent);
+}
+
+/* 特色区块样式 */
+.feature-block {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.feature-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(3, 218, 198, 0.2);
+}
+
+.feature-header i {
+  font-size: 2rem;
+  color: var(--accent);
+  margin-right: 15px;
+}
+
+.feature-header h3 {
+  font-size: 1.4rem;
+  color: var(--accent-light);
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.feature-item {
+  background: rgba(30, 30, 30, 0.5);
+  padding: 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.feature-item h4 {
+  color: var(--accent-light);
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.feature-item p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
