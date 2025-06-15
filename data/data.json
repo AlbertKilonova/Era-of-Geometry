@@ -22,7 +22,7 @@
       "name": "Albert Kilonova",
       "role": "社团长",
       "avatar": "//q.qlogo.cn/g?b=qq&nk=2294965955&s=100",
-      "introduction": "Era of Geometry创始人，前端开发者，动画创作者等，可以叫我阿波~",
+      "introduction": "Era of Geometry 的社团长，前端开发者，动画创作者等，可以叫我阿波~",
       "works": [
         {
           "title": "SO TIRED ROCK_MeMe背景",
@@ -36,7 +36,7 @@
       }
     },
     {
-      "name": "麦克",
+      "name": "satura",
       "role": "动画师 审核员",
       "avatar": "//q.qlogo.cn/g?b=qq&nk=346662555&s=100",
       "introduction": "麦克",
@@ -50,7 +50,7 @@
       "name": "好初腾",
       "role": "动画师 审核员",
       "avatar": "//q.qlogo.cn/g?b=qq&nk=3571398428&s=100",
-      "introduction": "好初腾",
+      "introduction": "帅气逼人，人帅心善，聪明过人的好初腾",
       "works": [
       ],
       "contact": {
@@ -79,6 +79,17 @@
         "qq": "3865768909",
         "email": "Anming1379@outlook.com"
       }
+    },
+    {
+      "name": "屑",
+      "role": "动画师",
+      "avatar": "//q.qlogo.cn/g?b=qq&nk=2825800344&s=100",
+      "introduction": "空无以求全",
+      "works": [
+      ],
+      "contact": {
+        "qq": "2825800344"
+      }
     }
   ],
   "opus": [
@@ -92,7 +103,7 @@
   "projects": [
     {
       "title": "云境小镇",
-      "description": "模拟经营类游戏\"云境小镇\"尚处开发状态，敬请期待",
+      "description": "模拟经营类游戏\"云境小镇\"尚处框架开发状态，敬请期待",
       "image": "",
       "progress": 20
     },
