@@ -327,7 +327,7 @@ a {
 }
 
 .card.member:hover {
-  transform: translateY(-2px) translateX(10px);
+  transform: translateY(-4px);
 }
 
 .card-image {
