@@ -369,6 +369,13 @@ body.dark-mode {
   margin-right: 16px;
 }
 
+.member-avatar img {
+  width: 95%;
+  height: 95%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .member-info {
   flex: 1;
 }
