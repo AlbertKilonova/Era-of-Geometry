@@ -726,11 +726,195 @@ body.dark-mode .announcement.sticky {
   margin-bottom: 8px;
 }
 
-/* 项目卡片图片样式 */
+/* 项目卡片图片容器 */
 #project .card-image {
   height: 180px;
-  background-size: cover;
-  background-position: center;
   position: relative;
   overflow: hidden;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+}
+
+/* 项目卡片实际图片 */
+#project .card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+/* 图片加载失败时的回退背景 */
+#project .card-image .image-fallback {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary-variant));
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* 图片加载失败时显示回退背景 */
+#project .card-image.image-failed img {
+  opacity: 0;
+}
+
+#project .card-image.image-failed .image-fallback {
+  opacity: 1;
+}
+
+/* 回退背景中的图标 */
+#project .card-image .image-fallback::before {
+  content: 'rocket_launch'; /* 使用项目相关图标 */
+  font-family: 'Material Icons';
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.2);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 项目状态条位置调整 */
+#project .project-status {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 8px 16px;
+  backdrop-filter: blur(4px);
+  z-index: 3; /* 确保在回退背景之上 */
+}
+
+body.dark-mode #project .project-status {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+#project .status-text {
+  color: white;
+  font-size: 0.9rem;
+}
+
+/* 悬停效果 */
+#project .card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+#project .card .card-image img {
+  transition: transform 0.5s ease;
+}
+
+/* 项目卡片内容区域 */
+#project .card-content {
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+  background: var(--surface);
+}
+
+#project .card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: var(--on-surface);
+}
+
+#project .card p {
+  color: var(--on-surface);
+  opacity: 0.8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* 暗色模式适配 */
+body.dark-mode #project .card-image .image-fallback::before {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+/* 作品卡片图片容器 */
+.card-image {
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+}
+
+/* 作品卡片实际图片 */
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+/* 图片加载失败时的回退背景 */
+.card-image .image-fallback {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary-variant));
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* 图片加载失败时显示回退背景 */
+.card-image.image-failed img {
+  opacity: 0;
+}
+
+.card-image.image-failed .image-fallback {
+  opacity: 1;
+}
+
+/* 回退背景中的图标 */
+.card-image .image-fallback::before {
+  content: 'image';
+  font-family: 'Material Icons';
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.2);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 悬停效果 */
+.card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+.card .card-image img {
+  transition: transform 0.5s ease;
+}
+
+/* 作品卡片内容区域 */
+#opus .card-content {
+  padding: 20px;
+}
+
+#opus .card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: var(--on-surface);
+}
+
+#opus .card p {
+  color: var(--on-surface);
+  opacity: 0.8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  min-height: 60px;
+}
+
+/* 暗色模式适配 */
+body.dark-mode .card-image .image-fallback::before {
+  color: rgba(0, 0, 0, 0.2);
 }

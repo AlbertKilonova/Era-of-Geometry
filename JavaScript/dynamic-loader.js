@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
       console.error('加载数据失败:', error);
       showFallbackContent();
     });
-
+  
   // 生成公告内容
   function generateAnnouncements(announcements) {
     const announcementList = document.querySelector('.announcement-list');
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
       announcementList.appendChild(announcementElement);
     });
   }
-
+  
   // 生成成员卡片
   function generateMembers(members) {
     const memberGrid = document.querySelector('#member .card-grid');
@@ -128,8 +128,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // 重新绑定成员卡片点击事件
     initMemberCardInteractions();
   }
-
-  // 生成作品卡片
+  
+  // 生成作品卡片（添加图片加载失败处理）
   function generateOpus(opusList) {
     const opusGrid = document.querySelector('#opus .card-grid');
     if (!opusGrid) return;
@@ -147,15 +147,18 @@ document.addEventListener('DOMContentLoaded', function() {
       opusCard.className = 'card';
       
       opusCard.innerHTML = `
-        <div class="card-image" style="background-image: url('${opus.image}');"></div>
-        <div class="card-content">
-          <h3>${opus.title}</h3>
-          <p>${opus.description}</p>
-          <div class="card-actions">
-            <a href="${opus.detailUrl}" class="detail-button ripple" target="_blank">查看详情</a>
-          </div>
+      <div class="card-image">
+        <img src="${opus.image}" alt="${opus.title}" onerror="this.onerror=null;this.parentElement.classList.add('image-failed');">
+        <div class="image-fallback"></div>
+      </div>
+      <div class="card-content">
+        <h3>${opus.title}</h3>
+        <p>${opus.description}</p>
+        <div class="card-actions">
+          <a href="${opus.detailUrl}" class="detail-button ripple" target="_blank">查看详情</a>
         </div>
-      `;
+      </div>
+    `;
       
       opusGrid.appendChild(opusCard);
     });
@@ -163,51 +166,55 @@ document.addEventListener('DOMContentLoaded', function() {
     // 绑定作品按钮波纹效果
     initOpusButtonInteractions();
   }
-
-  // 生成项目卡片（添加图片展示功能）
-function generateProjects(projects) {
-  const projectGrid = document.querySelector('#project .card-grid');
-  if (!projectGrid) return;
   
-  // 清空现有内容
-  projectGrid.innerHTML = '';
-  
-  if (!projects || projects.length === 0) {
-    projectGrid.innerHTML = '<div class="card"><p>暂无项目信息</p></div>';
-    return;
-  }
-  
-  projects.forEach(project => {
-    const projectCard = document.createElement('div');
-    projectCard.className = 'card';
+  // 生成项目卡片（使用与作品卡片相同的图片处理逻辑）
+  function generateProjects(projects) {
+    const projectGrid = document.querySelector('#project .card-grid');
+    if (!projectGrid) return;
     
-    // 根据进度自动生成颜色
-    const progressColor = getProgressColor(project.progress);
+    // 清空现有内容
+    projectGrid.innerHTML = '';
     
-    // 生成图片HTML - 如果有图片则使用，否则使用默认渐变背景
-    let imageHTML = '';
-    if (project.image) {
-      imageHTML = `<div class="card-image" style="background-image: url('${project.image}');"></div>`;
-    } else {
-      // 没有图片时使用默认渐变背景
-      imageHTML = `<div class="card-image" style="background: linear-gradient(45deg, var(--primary), var(--secondary));"></div>`;
+    if (!projects || projects.length === 0) {
+      projectGrid.innerHTML = '<div class="card"><p>暂无项目信息</p></div>';
+      return;
     }
     
-    projectCard.innerHTML = `
-      ${imageHTML}
-      <div class="project-status">
-        <div class="status-bar" style="width: ${project.progress}%; background-color: ${progressColor};"></div>
-        <div class="status-text">项目进度 (${project.progress}%)</div>
+    projects.forEach(project => {
+      const projectCard = document.createElement('div');
+      projectCard.className = 'card';
+      
+      // 根据进度自动生成颜色
+      const progressColor = getProgressColor(project.progress);
+      
+      // 使用与作品卡片相同的图片处理逻辑
+      let imageHTML = `
+      <div class="card-image">
+        <img src="${project.image || ''}" alt="${project.title}" 
+             onerror="this.onerror=null;this.parentElement.classList.add('image-failed');">
+        <div class="image-fallback"></div>
+    `;
+      
+      // 添加项目状态条（保持在图片容器内）
+      imageHTML += `
+        <div class="project-status">
+          <div class="status-bar" style="width: ${project.progress}%; background-color: ${progressColor};"></div>
+          <div class="status-text">项目进度 (${project.progress}%)</div>
+        </div>
       </div>
+    `;
+      
+      projectCard.innerHTML = `
+      ${imageHTML}
       <div class="card-content">
         <h3>${project.title}</h3>
         <p>${project.description}</p>
       </div>
     `;
-    
-    projectGrid.appendChild(projectCard);
-  });
-}
+      
+      projectGrid.appendChild(projectCard);
+    });
+  }
   
   // 根据进度值获取颜色
   function getProgressColor(progress) {
