@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <p>${member.introduction}</p>
           </div>
           <div class="detail-item">
-            <strong>代表作品：</strong>
+            <strong>作品：</strong>
             ${worksHTML}
           </div>
           <div class="detail-item">
