@@ -353,6 +353,7 @@ body.dark-mode {
   display: flex;
   padding: 16px;
   align-items: center;
+  position: relative;
 }
 
 .member-avatar {
@@ -390,6 +391,78 @@ body.dark-mode {
   font-size: 0.9rem;
   color: var(--on-surface);
   opacity: 0.7;
+}
+
+.dropdown-arrow {
+  position: absolute;
+  right: 16px;
+  transition: transform 0.3s ease;
+  color: var(--on-surface);
+  opacity: 0.7;
+}
+
+.member-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.3s ease;
+  background: rgba(0, 0, 0, 0.03);
+  color: var(--on-surface);
+}
+
+.member-card.expanded + .member-details {
+  max-height: 500px; /* 根据内容调整 */
+  padding: 16px;
+}
+
+.member-card.expanded .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.detail-item {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.detail-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.detail-item strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--primary);
+}
+
+.detail-item ul {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+
+.detail-item li {
+  margin-bottom: 6px;
+}
+
+.detail-item a {
+  color: var(--secondary);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.detail-item a:hover {
+  color: var(--secondary-variant);
+  text-decoration: underline;
+}
+
+/* 暗色模式适配 */
+body.dark-mode .member-details {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .detail-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* 公告样式 */

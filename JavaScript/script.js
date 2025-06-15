@@ -157,4 +157,34 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 初始检查
   checkTitleVisibility();
+  
+  // script.js 修改部分
+// 在DOMContentLoaded事件监听器中添加以下代码
+
+// 成员卡片下拉功能
+const memberCards = document.querySelectorAll('.member-card');
+memberCards.forEach(card => {
+  card.addEventListener('click', function() {
+    // 切换展开状态
+    this.classList.toggle('expanded');
+    
+    // 添加波纹效果
+    const ripple = document.createElement('div');
+    ripple.classList.add('ripple-effect');
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+    
+    ripple.style.width = ripple.style.height = `${size}px`;
+    ripple.style.left = `${x}px`;
+    ripple.style.top = `${y}px`;
+    
+    this.appendChild(ripple);
+    
+    setTimeout(() => {
+      ripple.remove();
+    }, 700);
+  });
+});
 });
