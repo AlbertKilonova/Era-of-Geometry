@@ -37,13 +37,24 @@
     },
     {
       "name": "麦克",
-      "role": "动画师",
+      "role": "动画师 审核员",
       "avatar": "//q.qlogo.cn/g?b=qq&nk=346662555&s=100",
       "introduction": "麦克",
       "works": [
       ],
       "contact": {
         "qq": "346662555"
+      }
+    },
+    {
+      "name": "好出腾",
+      "role": "动画师 审核员",
+      "avatar": "//q.qlogo.cn/g?b=qq&nk=3571398428&s=100",
+      "introduction": "好出腾",
+      "works": [
+      ],
+      "contact": {
+        "qq": "3571398428"
       }
     },
     {
@@ -58,14 +69,15 @@
       }
     },
     {
-      "name": "好出腾",
+      "name": "Anming_cat",
       "role": "动画师",
-      "avatar": "//q.qlogo.cn/g?b=qq&nk=3571398428&s=100",
-      "introduction": "好出腾",
+      "avatar": "//q.qlogo.cn/g?b=qq&nk=3865768909&s=100",
+      "introduction": "Hi 我素桉铭",
       "works": [
       ],
       "contact": {
-        "qq": "3571398428"
+        "qq": "3865768909",
+        "email": "Anming1379@outlook.com"
       }
     }
   ],
