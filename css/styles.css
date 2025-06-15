@@ -60,6 +60,12 @@ body.dark-mode {
   --shadow-color: var(--dark-shadow-color);
 }
 
+a {
+  color: var(--secondary);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
 /* 标题区域 */
 #title {
   background: linear-gradient(135deg, var(--primary), var(--primary-variant));
