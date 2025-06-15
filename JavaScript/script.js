@@ -158,9 +158,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // 初始检查
   checkTitleVisibility();
   
-  // script.js 修改部分
-// 在DOMContentLoaded事件监听器中添加以下代码
-
 // 成员卡片下拉功能
 const memberCards = document.querySelectorAll('.member-card');
 memberCards.forEach(card => {

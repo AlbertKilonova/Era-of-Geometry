@@ -725,3 +725,12 @@ body.dark-mode .announcement.sticky {
   align-items: center;
   margin-bottom: 8px;
 }
+
+/* 项目卡片图片样式 */
+#project .card-image {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+}
