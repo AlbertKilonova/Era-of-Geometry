@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       
       if (!contactHTML) {
-        contactHTML = '<p>暂无</p>';
+        contactHTML = '<p>暂无可用联系方式</p>';
       }
       
       memberCard.innerHTML = `
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initMemberCardInteractions();
   }
   
-  // 生成作品卡片（添加图片加载失败处理）
+  // 生成作品卡片
   function generateOpus(opusList) {
     const opusGrid = document.querySelector('#opus .card-grid');
     if (!opusGrid) return;
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initOpusButtonInteractions();
   }
   
-  // 生成项目卡片（使用与作品卡片相同的图片处理逻辑）
+  // 生成项目卡片
   function generateProjects(projects) {
     const projectGrid = document.querySelector('#project .card-grid');
     if (!projectGrid) return;
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // 添加波纹效果（通用函数）
+  // 添加波纹效果
   function addRippleEffect(element, event) {
     const ripple = document.createElement('div');
     ripple.classList.add('ripple-effect');
@@ -267,7 +267,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 数据加载失败时显示回退内容
   function showFallbackContent() {
-    // 这里可以添加更友好的错误提示
     alert('数据加载失败，请刷新。');
   }
 });
