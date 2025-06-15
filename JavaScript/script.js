@@ -3,8 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const contents = document.querySelectorAll('.content');
   const sliderBar = document.querySelector('.slider-bar');
   const backToTopBtn = document.getElementById('backToTop');
-  const navigationBar = document.querySelector('.slider-navigation');
   const themeToggle = document.getElementById('themeToggle');
+  
+  // 获取标题元素
+  const titleElement = document.getElementById('title');
   
   // 检查本地存储中的暗色模式设置
   const isDarkMode = localStorage.getItem('darkMode') === 'true';
@@ -31,8 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
     ripple.classList.add('ripple-effect');
     const rect = this.getBoundingClientRect();
     const size = Math.max(rect.width, rect.height) * 1.5;
-    const x = event.clientX - rect.left - size/2;
-    const y = event.clientY - rect.top - size/2;
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
     
     ripple.style.width = ripple.style.height = `${size}px`;
     ripple.style.left = `${x}px`;
@@ -83,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function() {
       ripple.classList.add('ripple-effect');
       const rect = this.getBoundingClientRect();
       const size = Math.max(rect.width, rect.height);
-      const x = event.clientX - rect.left - size/2;
-      const y = event.clientY - rect.top - size/2;
+      const x = event.clientX - rect.left - size / 2;
+      const y = event.clientY - rect.top - size / 2;
       
       ripple.style.width = ripple.style.height = `${size}px`;
       ripple.style.left = `${x}px`;
@@ -102,36 +104,51 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 返回顶部按钮功能
   if (backToTopBtn) {
+    // 添加波纹容器
+    const rippleContainer = document.createElement('div');
+    rippleContainer.classList.add('ripple-container');
+    backToTopBtn.appendChild(rippleContainer);
+    
     // 监听滚动事件
     window.addEventListener('scroll', function() {
-      // 获取导航栏位置
-      const navRect = navigationBar.getBoundingClientRect();
-      
-      // 如果导航栏移出视口顶部，显示返回顶部按钮
-      if (navRect.bottom < 0) {
-        backToTopBtn.classList.add('visible');
-      } else {
-        backToTopBtn.classList.remove('visible');
-      }
+      checkTitleVisibility();
     });
     
     // 点击返回顶部
-    backToTopBtn.addEventListener('click', function() {
+    backToTopBtn.addEventListener('click', function(event) {
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       });
+      
+      // 添加波纹效果
+      const ripple = document.createElement('div');
+      ripple.classList.add('ripple-effect');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height) * 1.5;
+      const x = event.clientX - rect.left - size / 2;
+      const y = event.clientY - rect.top - size / 2;
+      
+      ripple.style.width = ripple.style.height = `${size}px`;
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      
+      rippleContainer.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 700);
     });
   }
   
-  // 添加导航栏位置检测
-  function checkNavVisibility() {
-    if (!navigationBar) return;
+  // 添加标题位置检测
+  function checkTitleVisibility() {
+    if (!titleElement || !backToTopBtn) return;
     
-    const navRect = navigationBar.getBoundingClientRect();
-    const isNavVisible = navRect.top >= 0 && navRect.bottom <= window.innerHeight;
+    const titleRect = titleElement.getBoundingClientRect();
     
-    if (!isNavVisible) {
+    // 如果标题移出视口顶部，显示返回顶部按钮
+    if (titleRect.bottom < 0) {
       backToTopBtn.classList.add('visible');
     } else {
       backToTopBtn.classList.remove('visible');
@@ -139,5 +156,5 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // 初始检查
-  checkNavVisibility();
-}); 
+  checkTitleVisibility();
+});
