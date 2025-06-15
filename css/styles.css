@@ -924,3 +924,49 @@ body.dark-mode #project .card-image .image-fallback::before {
 body.dark-mode .card-image .image-fallback::before {
   color: rgba(0, 0, 0, 0.2);
 }
+
+/* 在styles.css中添加渲染按钮和Toast样式 */
+.render-button {
+  background: var(--primary);
+  color: var(--on-primary);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.render-button:hover {
+  background: var(--primary-variant);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.render-button i {
+  font-size: 18px;
+}
+
+/* Toast提示样式 */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--surface);
+  color: var(--on-surface);
+  padding: 12px 24px;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}

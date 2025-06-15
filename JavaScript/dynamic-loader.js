@@ -1,3 +1,4 @@
+// dynamic-loader.js
 document.addEventListener('DOMContentLoaded', function() {
   // 加载JSON数据
   fetch('./data/data.json')
@@ -66,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
     members.forEach(member => {
       const memberCard = document.createElement('div');
       memberCard.className = 'card member';
+      memberCard.dataset.memberId = member.name.toLowerCase().replace(/\s+/g, '-');
       
       // 生成作品列表HTML
       let worksHTML = '';
@@ -119,6 +121,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <strong>联系方式：</strong>
             ${contactHTML}
           </div>
+          <!-- 添加特定类名render-item以便选择 -->
+          <div class="detail-item render-item">
+            <strong>导出卡片：</strong>
+            <button class="render-button" data-member-id="${memberCard.dataset.memberId}">
+              <i class="material-icons">image</i> 渲染为图片
+            </button>
+          </div>
         </div>
       `;
       
@@ -127,6 +136,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 重新绑定成员卡片点击事件
     initMemberCardInteractions();
+    
+    // 绑定渲染按钮事件
+    bindRenderButtons();
   }
   
   // 生成作品卡片
@@ -268,5 +280,112 @@ document.addEventListener('DOMContentLoaded', function() {
   // 数据加载失败时显示回退内容
   function showFallbackContent() {
     alert('数据加载失败，请刷新。');
+  }
+  
+  // 绑定渲染按钮事件
+  function bindRenderButtons() {
+    document.querySelectorAll('.render-button').forEach(button => {
+      button.addEventListener('click', function() {
+        const memberId = this.dataset.memberId;
+        renderMemberCardAsImage(memberId);
+      });
+    });
+  }
+  
+  // 渲染成员卡片为图片
+  function renderMemberCardAsImage(memberId) {
+    const memberCard = document.querySelector(`.card.member[data-member-id="${memberId}"]`);
+    if (!memberCard) return;
+    
+    // 确保卡片是展开状态
+    const memberCardElement = memberCard.querySelector('.member-card');
+    const memberDetails = memberCard.querySelector('.member-details');
+    if (memberCardElement && !memberCardElement.classList.contains('expanded')) {
+      memberCardElement.classList.add('expanded');
+      memberDetails.style.maxHeight = 'none';
+      memberDetails.style.padding = '16px';
+    }
+    
+    // 创建临时容器
+    const tempContainer = document.createElement('div');
+    tempContainer.style.position = 'fixed';
+    tempContainer.style.left = '-9999px';
+    tempContainer.style.width = '350px'; // 固定宽度以获得一致渲染
+    document.body.appendChild(tempContainer);
+    
+    // 克隆卡片并移除不需要的元素
+    const clone = memberCard.cloneNode(true);
+    
+    // 移除下拉箭头
+    const dropdownArrow = clone.querySelector('.dropdown-arrow');
+    if (dropdownArrow) dropdownArrow.remove();
+    
+    // 移除整个导出卡片部分（使用特定的类名选择器）
+    const renderItem = clone.querySelector('.detail-item.render-item');
+    if (renderItem) renderItem.remove();
+    
+    // 应用当前主题样式
+    clone.classList.toggle('dark-mode', document.body.classList.contains('dark-mode'));
+    
+    tempContainer.appendChild(clone);
+    
+    // 显示加载提示
+    showToast('正在生成图片，请稍候...', 'info');
+    
+    // 使用html2canvas渲染
+    if (typeof html2canvas === 'function') {
+      html2canvas(clone, {
+        scale: 4, // 高清渲染
+        backgroundColor: getComputedStyle(document.body).backgroundColor,
+        logging: false,
+        useCORS: true // 启用跨域
+      }).then(canvas => {
+        // 创建下载链接
+        const link = document.createElement('a');
+        const memberName = memberCard.querySelector('.member-name').textContent;
+        link.download = `${memberName}-卡片.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        
+        // 显示成功提示
+        showToast(`已生成 ${memberName} 的卡片图片`, 'success');
+        
+        // 清理临时元素
+        tempContainer.remove();
+      }).catch(error => {
+        console.error('渲染失败:', error);
+        showToast('渲染失败，请重试', 'error');
+        tempContainer.remove();
+      });
+    } else {
+      showToast('渲染功能不可用，请确保已加载html2canvas库', 'error');
+      tempContainer.remove();
+    }
+  }
+  
+  // 显示Toast提示
+  function showToast(message, type = 'info') {
+    // 移除现有Toast
+    const existingToast = document.querySelector('.toast');
+    if (existingToast) existingToast.remove();
+    
+    // 创建新Toast
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    // 显示动画
+    setTimeout(() => {
+      toast.classList.add('show');
+    }, 10);
+    
+    // 3秒后移除
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
+    }, 3000);
   }
 });
