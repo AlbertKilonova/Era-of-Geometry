@@ -68,6 +68,10 @@ document.addEventListener('DOMContentLoaded', function () {
       const memberCard = document.createElement('div');
       memberCard.className = 'card member';
       memberCard.dataset.memberId = member.name.toLowerCase().replace(/\s+/g, '-');
+      
+      // 存储成员数据用于Canvas渲染
+      memberCard.dataset.member = JSON.stringify(member);
+      memberCard.dataset.theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
 
       // 生成作品列表HTML
       let worksHTML = '';
@@ -320,76 +324,296 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // 渲染成员卡片为图片
-  function renderMemberCardAsImage(memberId) {
-    const memberCard = document.querySelector(`.card.member[data-member-id="${memberId}"]`);
-    if (!memberCard) return;
+// 在renderMemberCardAsImage函数中替换Canvas绘制部分
+function renderMemberCardAsImage(memberId) {
+  const memberCard = document.querySelector(`.card.member[data-member-id="${memberId}"]`);
+  if (!memberCard) return;
 
-    // 确保卡片是展开状态
-    const memberCardElement = memberCard.querySelector('.member-card');
-    const memberDetails = memberCard.querySelector('.member-details');
-    if (memberCardElement && !memberCardElement.classList.contains('expanded')) {
-      memberCardElement.classList.add('expanded');
-      memberDetails.style.maxHeight = 'none';
-      memberDetails.style.padding = '16px';
+  // 获取存储的成员数据
+  const member = JSON.parse(memberCard.dataset.member);
+  const isDarkMode = memberCard.dataset.theme === 'dark';
+
+  // 显示加载提示
+  showToast('正在生成成员卡片...', 'info');
+
+  try {
+    // 创建Canvas元素
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // 设置Canvas尺寸（360px宽，高度动态计算）
+    const cardWidth = 360;
+    const padding = 25;
+    const sectionSpacing = 20;
+    
+    // 计算卡片高度
+    let cardHeight = padding * 2; // 基础高度（不含首字母区域）
+    
+    // 成员信息高度
+    cardHeight += 80;
+    
+    // 简介高度估算
+    const introLinesH = wrapText(ctx, member.introduction || "No introduction provided", cardWidth - padding * 2, 14);
+    cardHeight += introLinesH.length * 22;
+    
+    // 作品高度
+    const worksCount = member.works ? member.works.length : 0;
+    cardHeight += worksCount > 0 ? worksCount * 22 + 25 : 40;
+    
+    // 联系方式高度
+    let contactCount = 0;
+    if (member.contact) {
+      if (member.contact.homepage) contactCount++;
+      if (member.contact.qq) contactCount++;
+      if (member.contact.email) contactCount++;
+      if (member.contact.x) contactCount++;
+      if (member.contact.discord) contactCount++;
     }
-
-    // 创建临时容器
-    const tempContainer = document.createElement('div');
-    tempContainer.style.position = 'fixed';
-    tempContainer.style.left = '-9999px';
-    tempContainer.style.width = '350px'; // 固定宽度以获得一致渲染
-    document.body.appendChild(tempContainer);
-
-    // 克隆卡片并移除不需要的元素
-    const clone = memberCard.cloneNode(true);
-
-    // 移除下拉箭头
-    const dropdownArrow = clone.querySelector('.dropdown-arrow');
-    if (dropdownArrow) dropdownArrow.remove();
-
-    // 移除整个导出卡片部分
-    const renderItem = clone.querySelector('.detail-item.render-item');
-    if (renderItem) renderItem.remove();
-
-    // 应用当前主题样式
-    clone.classList.toggle('dark-mode', document.body.classList.contains('dark-mode'));
-
-    tempContainer.appendChild(clone);
-
-    // 显示加载提示
-    showToast('正在生成图片，请稍候...', 'info');
-
-    // 使用html2canvas渲染
-    if (typeof html2canvas === 'function') {
-      html2canvas(clone, {
-        scale: 4, // 高清渲染
-        backgroundColor: getComputedStyle(document.body).backgroundColor,
-        logging: false,
-        useCORS: true // 启用跨域
-      }).then(canvas => {
-        // 创建下载链接
-        const link = document.createElement('a');
-        const memberName = memberCard.querySelector('.member-name').textContent;
-        link.download = `${memberName}-卡片.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-
-        // 显示成功提示
-        showToast(`已生成 ${memberName} 的卡片图片`, 'success');
-
-        // 清理临时元素
-        tempContainer.remove();
-      }).catch(error => {
-        console.error('渲染失败:', error);
-        showToast('渲染失败，请重试', 'error');
-        tempContainer.remove();
+    cardHeight += contactCount > 0 ? contactCount * 22 + 25 : 40;
+    
+    // 添加顶部装饰区域高度
+    cardHeight += 60;
+    
+    // 设置Canvas尺寸（2倍分辨率）
+    canvas.width = cardWidth * 2;
+    canvas.height = cardHeight * 2;
+    ctx.scale(2, 2);
+    
+    // 设置主题颜色 - 科幻极简风格
+    const colors = {
+      background: "#0d1117",
+      surface: "#161b22",
+      text: "#f0f6fc",
+      primary: "#58a6ff",
+      secondary: "#1f6feb",
+      accent: "#f78166",
+      highlight: "#2ea043",
+      divider: "#30363d"
+    };
+    
+    // 绘制卡片背景 - 深空渐变
+    const bgGradient = ctx.createLinearGradient(0, 0, cardWidth, cardHeight);
+    bgGradient.addColorStop(0, "#0d1117");
+    bgGradient.addColorStop(1, "#0a0d14");
+    
+    ctx.fillStyle = bgGradient;
+    ctx.fillRect(0, 0, cardWidth, cardHeight);
+    
+    // 绘制极简边框
+    ctx.strokeStyle = colors.divider;
+    ctx.lineWidth = 1;
+    ctx.strokeRect(1, 1, cardWidth - 2, cardHeight - 2);
+    
+    // 绘制顶部装饰线
+    ctx.strokeStyle = colors.primary;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, 50);
+    ctx.lineTo(cardWidth, 50);
+    ctx.stroke();
+    
+    // 绘制标题文本
+    ctx.fillStyle = colors.text;
+    ctx.font = "bold 16px 'Roboto', sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("ERA OF GEOMETRY", cardWidth / 2, 25);
+    
+    // 绘制成员ID
+    ctx.fillStyle = colors.primary;
+    ctx.font = "10px 'Roboto Mono', monospace";
+    ctx.textAlign = "center";
+    ctx.fillText(`ID: ${memberId.toUpperCase()}`, cardWidth / 2, 40);
+    
+    // 绘制成员名称（居中显示）
+    const infoY = 80;
+    ctx.fillStyle = colors.text;
+    ctx.font = "bold 22px 'Roboto', sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    ctx.fillText(member.name, cardWidth / 2, infoY);
+    
+    // 绘制成员角色（居中显示）
+    ctx.fillStyle = colors.primary;
+    ctx.font = "14px 'Roboto', sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(member.role, cardWidth / 2, infoY + 30);
+    
+    // 绘制分隔线 - 极简风格
+    let currentY = infoY + 70;
+    ctx.strokeStyle = colors.divider;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padding, currentY);
+    ctx.lineTo(cardWidth - padding, currentY);
+    ctx.stroke();
+    
+    // 绘制简介标题
+    currentY += sectionSpacing;
+    ctx.fillStyle = colors.text;
+    ctx.font = "bold 14px 'Roboto', sans-serif";
+    ctx.textAlign = "left";
+    ctx.fillText("BIO", padding, currentY);
+    
+    // 绘制简介内容（自动换行）
+    ctx.fillStyle = colors.text;
+    ctx.font = "14px 'Roboto', sans-serif";
+    const introLines = wrapText(ctx, member.introduction || "No introduction provided", cardWidth - padding * 2, 14);
+    introLines.forEach(line => {
+      currentY += 20;
+      ctx.fillText(line, padding, currentY);
+    });
+    
+    // 绘制作品标题
+    currentY += sectionSpacing;
+    ctx.fillStyle = colors.text;
+    ctx.font = "bold 14px 'Roboto', sans-serif";
+    ctx.fillText("WORKS", padding, currentY);
+    
+    // 绘制作品内容（自动换行）
+    ctx.fillStyle = colors.text;
+    ctx.font = "14px 'Roboto', sans-serif";
+    if (member.works && member.works.length > 0) {
+      member.works.forEach(work => {
+        // 处理长标题自动换行
+        const workLines = wrapText(ctx, "• " + work.title, cardWidth - padding * 2, 14);
+        workLines.forEach(line => {
+          currentY += 20;
+          ctx.fillText(line, padding, currentY);
+        });
       });
     } else {
-      showToast('渲染功能不可用，请确保已加载html2canvas库', 'error');
-      tempContainer.remove();
+      currentY += 20;
+      ctx.fillText("No works listed", padding, currentY);
+    }
+    
+    // 绘制联系方式标题
+    currentY += sectionSpacing;
+    ctx.fillStyle = colors.text;
+    ctx.font = "bold 14px 'Roboto', sans-serif";
+    ctx.fillText("CONTACT", padding, currentY);
+    
+    // 绘制联系方式内容（自动换行）
+    ctx.fillStyle = colors.text;
+    ctx.font = "14px 'Roboto', sans-serif";
+    let hasContact = false;
+    
+    if (member.contact) {
+      const contactItems = [
+        { key: "homepage", prefix: "WEB: " },
+        { key: "qq", prefix: "QQ: " },
+        { key: "email", prefix: "MAIL: " },
+        { key: "x", prefix: "X: @" },
+        { key: "discord", prefix: "DISCORD: " }
+      ];
+      
+      for (const item of contactItems) {
+        if (member.contact[item.key]) {
+          // 处理长联系方式自动换行
+          const contactLines = wrapText(ctx, item.prefix + member.contact[item.key], cardWidth - padding * 2, 14);
+          contactLines.forEach(line => {
+            currentY += 20;
+            ctx.fillText(line, padding, currentY);
+          });
+          hasContact = true;
+        }
+      }
+    }
+    
+    if (!hasContact) {
+      currentY += 20;
+      ctx.fillText("No contact information", padding, currentY);
+    }
+    
+    // 添加底部装饰
+    const footerHeight = 30;
+    ctx.fillStyle = colors.surface;
+    ctx.fillRect(0, cardHeight - footerHeight, cardWidth, footerHeight);
+    
+    // 绘制底部文本
+    ctx.fillStyle = colors.primary;
+    ctx.font = "10px 'Roboto Mono', monospace";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("EoG | " + new Date().toISOString().slice(0, 10), cardWidth / 2, cardHeight - footerHeight / 2);
+    
+    // 添加装饰性科技元素（可选）
+    drawTechElements(ctx, cardWidth, cardHeight, colors);
+    
+    // 创建下载链接
+    const link = document.createElement('a');
+    link.download = `EoG-${member.name.replace(/\s+/g, '_')}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    
+    // 显示成功提示
+    showToast(`已生成 ${member.name} 的卡片`, 'success');
+    
+  } catch (error) {
+    console.error('Canvas渲染失败:', error);
+    showToast('卡片生成失败，请重试', 'error');
+  }
+}
+
+// 添加科技元素装饰
+function drawTechElements(ctx, cardWidth, cardHeight, colors) {
+  
+  // 绘制底部装饰线条
+  ctx.strokeStyle = colors.divider;
+  ctx.lineWidth = 0.5;
+  ctx.beginPath();
+  for (let i = 0; i < 5; i++) {
+    const y = cardHeight - 20 + i * 3;
+    ctx.moveTo(20, y);
+    ctx.lineTo(cardWidth - 20, y);
+  }
+  ctx.stroke();
+}
+
+// 文本换行辅助函数（优化版）
+function wrapText(ctx, text, maxWidth, fontSize) {
+  ctx.font = `${fontSize}px 'Roboto', sans-serif`;
+  const words = text.split(' ');
+  const lines = [];
+  let currentLine = '';
+
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
+    const testLine = currentLine ? currentLine + ' ' + word : word;
+    const metrics = ctx.measureText(testLine);
+    
+    if (metrics.width <= maxWidth) {
+      currentLine = testLine;
+    } else {
+      // 当前行已满，添加到结果
+      if (currentLine) lines.push(currentLine);
+      
+      // 处理单个单词过长的情况
+      if (ctx.measureText(word).width > maxWidth) {
+        // 将过长的单词拆分为字符
+        let tempWord = '';
+        for (let j = 0; j < word.length; j++) {
+          const char = word[j];
+          const testChar = tempWord + char;
+          if (ctx.measureText(testChar).width > maxWidth) {
+            lines.push(tempWord);
+            tempWord = char;
+          } else {
+            tempWord = testChar;
+          }
+        }
+        currentLine = tempWord;
+      } else {
+        currentLine = word;
+      }
     }
   }
+  
+  // 添加最后一行
+  if (currentLine) lines.push(currentLine);
+  
+  return lines;
+}
 
   // 显示Toast提示
   function showToast(message, type = 'info') {
