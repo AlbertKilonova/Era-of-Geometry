@@ -209,18 +209,16 @@ homeListItems.forEach(item => {
       this.classList.remove('shake');
     }, 500);
     
-    // 检查是否达到5次点击
-    if (clickCounters[itemText] >= 5) {
-      // 显示提示
-      showToast('不要再点辣！', 'warning');
-    }
     if (clickCounters[itemText] >= 10) {
       
       alert('戳十次辣！');
       
       // 重置计数器
       clickCounters[itemText] = 0;
-    }
+    } else if (clickCounters[itemText] >= 5) {
+      // 显示提示
+      showToast('不要再点辣！', 'warning');
+    };
   });
 });
 

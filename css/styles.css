@@ -980,7 +980,7 @@ body.dark-mode .card-image .image-fallback::before {
 }
 
 .shake {
-  animation: shake 0.5s ease;
+  animation: shake 180ms ease;
 }
 
 /* 警告Toast样式 */
