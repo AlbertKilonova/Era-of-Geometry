@@ -278,7 +278,6 @@ a {
 }
 
 .home-list li:hover {
-  transform: translateY(-3px);
   box-shadow:
     0 7px 14px rgba(0, 0, 0, 0.08),
     0 3px 6px rgba(0, 0, 0, 0.1);
@@ -969,4 +968,23 @@ body.dark-mode .card-image .image-fallback::before {
 .toast.show {
   transform: translateX(-50%) translateY(0);
   opacity: 1;
+}
+
+/* 抖动动画 */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.5s ease;
+}
+
+/* 警告Toast样式 */
+.toast-warning {
+  background: #ff9800;
+  color: white;
 }

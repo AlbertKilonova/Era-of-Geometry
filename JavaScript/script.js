@@ -158,30 +158,94 @@ document.addEventListener('DOMContentLoaded', function() {
   // 初始检查
   checkTitleVisibility();
   
-// 成员卡片下拉功能
-const memberCards = document.querySelectorAll('.member-card');
-memberCards.forEach(card => {
-  card.addEventListener('click', function() {
-    // 切换展开状态
-    this.classList.toggle('expanded');
-    
-    // 添加波纹效果
-    const ripple = document.createElement('div');
-    ripple.classList.add('ripple-effect');
-    const rect = this.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    const x = event.clientX - rect.left - size / 2;
-    const y = event.clientY - rect.top - size / 2;
-    
-    ripple.style.width = ripple.style.height = `${size}px`;
-    ripple.style.left = `${x}px`;
-    ripple.style.top = `${y}px`;
-    
-    this.appendChild(ripple);
-    
-    setTimeout(() => {
-      ripple.remove();
-    }, 700);
+  // 成员卡片下拉功能
+  const memberCards = document.querySelectorAll('.member-card');
+  memberCards.forEach(card => {
+    card.addEventListener('click', function() {
+      // 切换展开状态
+      this.classList.toggle('expanded');
+      
+      // 添加波纹效果
+      const ripple = document.createElement('div');
+      ripple.classList.add('ripple-effect');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = event.clientX - rect.left - size / 2;
+      const y = event.clientY - rect.top - size / 2;
+      
+      ripple.style.width = ripple.style.height = `${size}px`;
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      
+      this.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 700);
+    });
   });
 });
+
+// 新增功能：首页列表项点击抖动效果
+const homeListItems = document.querySelectorAll('.home-list li');
+const clickCounters = {};
+
+homeListItems.forEach(item => {
+  // 初始化每个列表项的计数器
+  clickCounters[item.textContent.trim()] = 0;
+  
+  item.addEventListener('click', function() {
+    // 获取当前列表项的文本作为唯一标识
+    const itemText = this.textContent.trim();
+    
+    // 增加计数器
+    clickCounters[itemText]++;
+    
+    // 添加抖动动画类
+    this.classList.add('shake');
+    
+    // 移除动画类以便下次再次添加
+    setTimeout(() => {
+      this.classList.remove('shake');
+    }, 500);
+    
+    // 检查是否达到5次点击
+    if (clickCounters[itemText] >= 5) {
+      // 显示提示
+      showToast('不要再点辣！', 'warning');
+    }
+    if (clickCounters[itemText] >= 10) {
+      
+      alert('戳十次辣！');
+      
+      // 重置计数器
+      clickCounters[itemText] = 0;
+    }
+  });
 });
+
+// 显示Toast提示函数
+function showToast(message, type = 'info') {
+  // 移除现有Toast
+  const existingToast = document.querySelector('.toast');
+  if (existingToast) existingToast.remove();
+  
+  // 创建新Toast
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  
+  // 显示动画
+  setTimeout(() => {
+    toast.classList.add('show');
+  }, 10);
+  
+  // 3秒后移除
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => {
+      toast.remove();
+    }, 300);
+  }, 3000);
+};
