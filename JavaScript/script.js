@@ -211,13 +211,13 @@ homeListItems.forEach(item => {
     
     if (clickCounters[itemText] >= 10) {
       
-      alert('戳十次辣！');
+      alert('戳疼辣！没有功能啦！QAQ');
       
       // 重置计数器
       clickCounters[itemText] = 0;
     } else if (clickCounters[itemText] >= 5) {
       // 显示提示
-      showToast('不要再点辣！', 'warning');
+      showToast('不要再戳辣！', 'warning');
     };
   });
 });
