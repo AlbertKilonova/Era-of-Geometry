@@ -211,7 +211,7 @@ homeListItems.forEach(item => {
     
     if (clickCounters[itemText] >= 10) {
       
-      alert('戳疼辣！没有功能啦！QAQ');
+      alert('别戳啦，疼哇，没有功能的啦！QAQ');
       
       // 重置计数器
       clickCounters[itemText] = 0;
