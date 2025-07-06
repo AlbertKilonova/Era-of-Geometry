@@ -94,7 +94,22 @@
     "contact": {
       "qq": "2019599985"
     }
-  }],
+  },
+    {
+    "name": "番个茄",
+    "role": "吉祥物",
+    "avatar": "//q.qlogo.cn/g?b=qq&nk=811879460&s=100",
+    "introduction": "这里是番个茄，泥嚎。<br/>圈名是:番个茄，是一个阴暗社恐的小绿毛",
+    "works": [
+      {
+      "title": "下梯",
+      "url": "https://static.huashijie.art/w_d/223407575"
+    }],
+    "contact": {
+      "qq": "811879460"
+    }
+  }
+  ],
   "opus": [
   {
     "title": "暂无",
