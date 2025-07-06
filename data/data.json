@@ -95,21 +95,39 @@
       "qq": "2019599985"
     }
   },
-    {
+  {
     "name": "番个茄",
     "role": "吉祥物",
     "avatar": "//q.qlogo.cn/g?b=qq&nk=811879460&s=100",
     "introduction": "这里是番个茄，泥嚎。<br/>圈名是:番个茄，是一个阴暗社恐的小绿毛",
     "works": [
-      {
+    {
       "title": "下梯",
       "url": "https://static.huashijie.art/w_d/223407575"
     }],
     "contact": {
       "qq": "811879460"
     }
-  }
-  ],
+  },
+  {
+    "name": "LANZU狼珠",
+    "role": "动画师",
+    "avatar": "//q.qlogo.cn/g?b=qq&nk=2454438250&s=100",
+    "introduction": "这里是LANZU狼珠／紫外线，一个动规不会但是瞎搞的动画师",
+    "works": [
+    {
+      "title": "【Sprunki双黑】没有你的我",
+      "url": "https://b23.tv/D4DHQFD"
+    },
+    {
+      "title": "【Sprunki面瘫组】",
+      "url": "https://b23.tv/AQoBVxv"
+    }],
+    "contact": {
+      "homepage": "https://static.pandapaint.net/pagesart/wap/#/usercenter?userId=11844047",
+      "qq": "2454438250"
+    }
+  }],
   "opus": [
   {
     "title": "暂无",
