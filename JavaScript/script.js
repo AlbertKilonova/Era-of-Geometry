@@ -158,6 +158,41 @@ document.addEventListener('DOMContentLoaded', function() {
   // 初始检查
   checkTitleVisibility();
   
+  document.querySelectorAll('#opus .card').forEach(card => {
+    const video = card.querySelector('video');
+    const playIcon = card.querySelector('.play-icon');
+    
+    if (video && playIcon) {
+      // 点击播放视频
+      card.addEventListener('click', function(e) {
+        // 排除按钮点击
+        if (e.target.closest('.detail-button')) return;
+        
+        if (video.paused) {
+          video.play();
+          playIcon.style.opacity = '0';
+        } else {
+          video.pause();
+          playIcon.style.opacity = '1';
+        }
+      });
+      
+      // 视频播放状态变化
+      video.addEventListener('play', () => {
+        playIcon.style.opacity = '0';
+      });
+      
+      video.addEventListener('pause', () => {
+        playIcon.style.opacity = '1';
+      });
+      
+      // 视频结束重置
+      video.addEventListener('ended', () => {
+        playIcon.style.opacity = '1';
+      });
+    }
+  });
+  
   // 成员卡片下拉功能
   const memberCards = document.querySelectorAll('.member-card');
   memberCards.forEach(card => {

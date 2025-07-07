@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 生成作品卡片
   function generateOpus(opusList) {
-    const opusGrid = document.querySelector('#opus .card-grid');
+     opusGrid = document.querySelector('#opus .card-grid');
     if (!opusGrid) return;
 
     // 清空现有内容
@@ -181,17 +181,64 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     opusList.forEach(opus => {
-      if (opus.type === "image") {
-        opusTemp = `<img src="${opus.url}" alt="${opus.title}" onerror="this.onerror=null;this.parentElement.classList.add('image-failed');">`
-      } else if (opus.type === "video") {
-        opusTemp = `<iframe src="${opus.url}" frameborder="0" allowfullscreen></iframe>`;
-      } else if (opus.type === "music") {
-        opusTemp = `<iframe src="//music.163.com/outchain/player?type=2&id=${opus.url}&auto=0&height=66" width="100%" height="85" frameborder="no" loading="lazy"></iframe>`;
-      }
-      const opusCard = document.createElement('div');
-      opusCard.className = 'card';
+      let opusTemp = '';
+let isDirectVideo = false;
+let videoType = '';
 
-      opusCard.innerHTML = `
+if (opus.type === "image") {
+  opusTemp = `<img src="${opus.url}" alt="${opus.title}" onerror="this.onerror=null;this.parentElement.classList.add('image-failed');">`;
+} else if (opus.type === "video") {
+  // 获取第一个有效URL
+  const videoUrls = opus.url.split(' ').filter(url => url.trim() !== '');
+  const videoUrl = videoUrls.length > 0 ? videoUrls[0] : '';
+  
+  // 检查是否为B站视频
+  const isBilibili = videoUrl.includes('bilibili.com');
+  
+  // 检查是否为直接视频文件
+  const videoFileExt = videoUrl.match(/\.(mp4|webm|ogg|mov)$/i);
+  isDirectVideo = !!videoFileExt;
+  videoType = videoFileExt ? videoFileExt[1].toLowerCase() : '';
+  
+  if (isBilibili) {
+    // B站视频使用iframe嵌入
+    opusTemp = `
+            <div class="video-preview">
+              <iframe src="${videoUrl}" frameborder="0" allowfullscreen></iframe>
+            </div>
+          `;
+  } else if (isDirectVideo) {
+    // 直接视频文件使用video标签
+    opusTemp = `
+            <div class="video-preview">
+              <video>
+                <source src="${videoUrl}" type="video/${videoType}">
+              </video>
+              <div class="play-icon">
+                <i class="material-icons">play_circle</i>
+              </div>
+            </div>
+          `;
+  } else {
+    // 其他类型显示为链接
+    opusTemp = `
+            <div class="video-preview">
+              <div class="video-fallback"></div>
+              <a href="${videoUrl}" target="_blank" class="video-link">
+                <i class="material-icons">play_circle</i>
+                <span>播放视频</span>
+              </a>
+            </div>
+          `;
+  }
+} else if (opus.type === "music") {
+  opusTemp = `<iframe src="//music.163.com/outchain/player?type=2&id=${opus.url}&auto=0&height=66" width="100%" height="85" frameborder="no" loading="lazy"></iframe>`;
+}
+
+const opusCard = document.createElement('div');
+opusCard.className = 'card';
+
+opusCard.innerHTML = `
       <div class="card-image">
         ${opusTemp}
         <div class="image-fallback"></div>
