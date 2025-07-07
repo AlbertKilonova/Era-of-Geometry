@@ -130,11 +130,23 @@
   }],
   "opus": [
   {
-    "title": "暂无",
+    "title": "下梯",
     "description": "暂无",
-    "type": "image",
-    "url": "",
-    "detailUrl": "#"
+    "type": "video",
+    "url": "http://bsyimg.pandapaint.net/v2/video/user/10022929/1737353516702.mp4",
+    "detailUrl": "https://www.huashijie.art/work/detail/223407575"
+  },{
+    "title": "【Sprunki面瘫组】",
+    "description": "暂无",
+    "type": "video",
+    "url": "//player.bilibili.com/player.html?isOutside=true&aid=114646048642549&bvid=BV1MNTQz4EAF&cid=25808345022&p=1 //player.bilibili.com/player.html?isOutside=true&aid=114646048642549&bvid=BV1MNTQz4EAF&cid=25808345022&p=1",
+    "detailUrl": "https://b23.tv/AQoBVxv"
+  },{
+    "title": "【Sprunki双黑】没有你的我",
+    "description": "暂无",
+    "type": "video",
+    "url": "//player.bilibili.com/player.html?isOutside=true&aid=114454318551254&bvid=BV1rCVqzREGV&cid=25795698526&p=1",
+    "detailUrl": "https://b23.tv/D4DHQFD"
   }],
   "projects": [
   {
