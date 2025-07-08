@@ -563,7 +563,6 @@ function renderMemberCardAsImage(memberId) {
             ctx.fillText(line, padding, currentY);
           });
           hasContact = true;
-          currentY += 20;
         }
       }
     }
@@ -572,6 +571,8 @@ function renderMemberCardAsImage(memberId) {
       currentY += 20;
       ctx.fillText("No contact information", padding, currentY);
     }
+    
+    currentY += 20;
     
     // 添加底部装饰
     const footerHeight = 30;
