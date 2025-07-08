@@ -130,7 +130,7 @@
   },
   {
     "name": "旬阳",
-    "role": "帅哥",
+    "role": "动画师",
     "avatar": "//q.qlogo.cn/g?b=qq&nk=2744283454&s=100",
     "introduction": "我喜欢你",
     "works": [],
@@ -138,7 +138,18 @@
       "qq": "2744283454",
       "email": "2744283454@qq.com"
     }
-    }],
+  },
+  {
+    "name": "二结合",
+    "role": "编程师",
+    "avatar": "//q.qlogo.cn/g?b=qq&nk=3940044587&s=100",
+    "introduction": "x=x+1",
+    "works": [],
+    "contact": {
+      "qq": "3940044587",
+      "email": "3940044587@qq.com"
+    }
+  }],
   "opus": [
   {
     "title": "下梯",
@@ -146,20 +157,19 @@
     "type": "video",
     "url": "http://bsyimg.pandapaint.net/v2/video/user/10022929/1737353516702.mp4",
     "detailUrl": "https://www.huashijie.art/work/detail/223407575"
-  },{
+  }, {
     "title": "【Sprunki面瘫组】",
     "description": "暂无",
     "type": "video",
     "url": "//player.bilibili.com/player.html?isOutside=true&aid=114646048642549&bvid=BV1MNTQz4EAF&cid=25808345022&p=1 //player.bilibili.com/player.html?isOutside=true&aid=114646048642549&bvid=BV1MNTQz4EAF&cid=25808345022&p=1",
     "detailUrl": "https://b23.tv/AQoBVxv"
-  },{
+  }, {
     "title": "【Sprunki双黑】没有你的我",
     "description": "暂无",
     "type": "video",
     "url": "//player.bilibili.com/player.html?isOutside=true&aid=114454318551254&bvid=BV1rCVqzREGV&cid=25795698526&p=1",
     "detailUrl": "https://b23.tv/D4DHQFD"
-  }
-  ],
+  }],
   "projects": [
   {
     "title": "云境小镇",
