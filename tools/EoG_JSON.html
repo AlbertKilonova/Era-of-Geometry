@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON表单生成器</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 5px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #3498db, #8e44ad);
+            color: white;
+            padding: 25px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.7;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .content {
+            display: flex;
+            padding: 30px;
+            gap: 30px;
+            min-height: 70vh;
+        }
+        
+        @media (max-width: 900px) {
+            .content {
+                flex-direction: column;
+            }
+        }
+        
+        .form-section, .preview-section {
+            flex: 1;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #8e44ad;
+            color: #3498db;
+        }
+        
+        .section-title i {
+            font-size: 1.5rem;
+            color: #8e44ad;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 5px;
+            background: #f8f9ff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .form-group:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+        
+        .form-group h3 {
+            margin-bottom: 15px;
+            color: #3498db;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-row {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .optional {
+            color: #888;
+            font-size: 0.85em;
+            font-weight: normal;
+            margin-left: 5px;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .array-items {
+            margin: 15px 0;
+        }
+        
+        .array-item {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+            position: relative;
+        }
+        
+        .remove-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .add-btn {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .add-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+        }
+        
+        .preview-card {
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            border: 1px solid #eee;
+            height: 500px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            line-height: 1.6;
+            white-space: pre;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 0 30px 30px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 16px 35px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .generate-btn {
+            background: linear-gradient(90deg, #3498db, #8e44ad);
+            color: white;
+        }
+        
+        .download-btn {
+            background: linear-gradient(90deg, #2ecc71, #3498db);
+            color: white;
+        }
+        
+        .reset-btn {
+            background: linear-gradient(90deg, #e74c3c, #e67e22);
+            color: white;
+        }
+        
+        button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2ecc71;
+            color: white;
+            padding: 18px 28px;
+            border-radius: 5px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: translateX(120%);
+            transition: transform 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .error {
+            background: #e74c3c;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 0 0 5px 5px;
+        }
+        
+        .highlight {
+            color: #3498db;
+            background: rgba(52, 152, 219, 0.1);
+            padding: 2px 5px;
+            border-radius: 5px;
+        }
+        
+        .example {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 5px;
+        }
+        
+        .toggle-contact {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .toggle-contact input {
+            width: auto;
+            margin: 0;
+        }
+        
+        .toggle-contact span {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .contact-fields {
+            transition: all 0.3s ease;
+        }
+        
+        .contact-fields.collapsed {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-file-code"></i> JSON表单生成器</h1>
+            <p class="subtitle">通过填写表单自动生成EoG成员JSON结构数据，并支持下载功能</p>
+        </header>
+        
+        <div class="content">
+            <div class="form-section">
+                <div class="section-title">
+                    <i class="fas fa-edit"></i>
+                    <h2>表单输入</h2>
+                </div>
+                
+                <div class="form-group">
+                    <h3><i class="fas fa-user"></i> 基本信息</h3>
+                    <div class="form-row">
+                        <label for="name">姓名 <span class="optional">(必填)</span></label>
+                        <input type="text" id="name" placeholder="例如：张三" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="role">角色 <span class="optional">(必填)</span></label>
+                        <input type="text" id="role" placeholder="例如：前端开发工程师" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="avatar">头像URL <span class="optional">(选填)</span></label>
+                        <input type="text" id="avatar" placeholder="例如：https://example.com/avatar.jpg">
+                        <p class="example">提示：使用图床服务托管头像</p>
+                    </div>
+                    <div class="form-row">
+                        <label for="introduction">个人介绍 <span class="optional">(选填)</span></label>
+                        <textarea id="introduction" placeholder="请简要介绍你自己..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h3><i class="fas fa-folder-open"></i> 作品集 <span class="optional">(选填)</span></h3>
+                    <div id="worksContainer">
+                        <div class="array-item">
+                            <button class="remove-btn"><i class="fas fa-times"></i></button>
+                            <div class="form-row">
+                                <label>作品标题</label>
+                                <input type="text" class="workTitle" placeholder="例如：我的第一个项目">
+                            </div>
+                            <div class="form-row">
+                                <label>作品链接</label>
+                                <input type="text" class="workUrl" placeholder="例如：https://example.com/project">
+                            </div>
+                        </div>
+                    </div>
+                    <button id="addWorkBtn" class="add-btn">
+                        <i class="fas fa-plus"></i> 添加作品
+                    </button>
+                </div>
+                
+                <div class="form-group">
+                    <h3><i class="fas fa-address-book"></i> 联系方式 <span class="optional">(选填)</span></h3>
+                    <div class="toggle-contact">
+                        <input type="checkbox" id="showContact" checked>
+                        <span>展示联系方式</span>
+                    </div>
+                    <div id="contactFields" class="contact-fields">
+                        <div class="form-row">
+                            <label for="homepage">个人主页</label>
+                            <input type="text" id="homepage" placeholder="例如：https://your-website.com">
+                        </div>
+                        <div class="form-row">
+                            <label for="qq">QQ</label>
+                            <input type="text" id="qq" placeholder="例如：123456789">
+                        </div>
+                        <div class="form-row">
+                            <label for="email">电子邮箱</label>
+                            <input type="text" id="email" placeholder="例如：example@domain.com">
+                        </div>
+                        <div class="form-row">
+                            <label for="discord">Discord</label>
+                            <input type="text" id="discord" placeholder="例如：yourdiscord#1234">
+                        </div>
+                        <div class="form-row">
+                            <label for="x">X</label>
+                            <input type="text" id="x" placeholder="例如：yourX#1234">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="preview-section">
+                <div class="section-title">
+                    <i class="fas fa-eye"></i>
+                    <h2>JSON预览</h2>
+                </div>
+                <div id="preview" class="preview-card">
+{
+  "name": "",
+  "role": "",
+  "avatar": "",
+  "introduction": "",
+  "works": []
+}
+                </div>
+                <div class="controls">
+                    <button id="generateBtn" class="generate-btn">
+                        <i class="fas fa-cogs"></i> 生成JSON
+                    </button>
+                    <button id="downloadBtn" class="download-btn">
+                        <i class="fas fa-download"></i> 下载JSON
+                    </button>
+                    <button id="resetBtn" class="reset-btn">
+                        <i class="fas fa-redo"></i> 重置表单
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="notification" class="notification">
+            <i class="fas fa-check-circle"></i>
+            <span>文件下载成功！</span>
+        </div>
+        
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM元素
+            const nameInput = document.getElementById('name');
+            const roleInput = document.getElementById('role');
+            const avatarInput = document.getElementById('avatar');
+            const introInput = document.getElementById('introduction');
+            const homepageInput = document.getElementById('homepage');
+            const qqInput = document.getElementById('qq');
+            const emailInput = document.getElementById('email');
+            const discordInput = document.getElementById('discord');
+            const xInput = document.getElementById('x');
+            const worksContainer = document.getElementById('worksContainer');
+            const addWorkBtn = document.getElementById('addWorkBtn');
+            const preview = document.getElementById('preview');
+            const generateBtn = document.getElementById('generateBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const notification = document.getElementById('notification');
+            const showContactCheckbox = document.getElementById('showContact');
+            const contactFields = document.getElementById('contactFields');
+            
+            // 切换联系方式显示
+            showContactCheckbox.addEventListener('change', function() {
+                contactFields.classList.toggle('collapsed', !this.checked);
+            });
+            
+            // 添加作品
+            addWorkBtn.addEventListener('click', function() {
+                const workDiv = document.createElement('div');
+                workDiv.className = 'array-item';
+                workDiv.innerHTML = `
+                    <button class="remove-btn"><i class="fas fa-times"></i></button>
+                    <div class="form-row">
+                        <label>作品标题</label>
+                        <input type="text" class="workTitle" placeholder="例如：我的第一个项目">
+                    </div>
+                    <div class="form-row">
+                        <label>作品链接</label>
+                        <input type="text" class="workUrl" placeholder="例如：https://example.com/project">
+                    </div>
+                `;
+                worksContainer.appendChild(workDiv);
+                
+                // 添加删除功能
+                workDiv.querySelector('.remove-btn').addEventListener('click', function() {
+                    worksContainer.removeChild(workDiv);
+                });
+            });
+            
+            // 生成JSON
+            generateBtn.addEventListener('click', function() {
+                // 验证必填字段
+                if (!nameInput.value.trim() || !roleInput.value.trim()) {
+                    showNotification('请填写姓名和角色！', true);
+                    return;
+                }
+                
+                const jsonData = {
+                    name: nameInput.value.trim(),
+                    role: roleInput.value.trim(),
+                    avatar: avatarInput.value.trim() || null,
+                    introduction: introInput.value.trim() || null,
+                    works: [],
+                    contact: {}
+                };
+                
+                // 收集作品
+                const workItems = document.querySelectorAll('.array-item');
+                workItems.forEach(item => {
+                    const title = item.querySelector('.workTitle').value.trim();
+                    const url = item.querySelector('.workUrl').value.trim();
+                    
+                    if (title || url) {
+                        jsonData.works.push({
+                            title: title || "未命名作品",
+                            url: url || "#"
+                        });
+                    }
+                });
+                
+                // 如果勾选了显示联系方式，则添加联系方式
+                if (showContactCheckbox.checked) {
+                    const contact = {};
+                    let hasContact = false;
+                    
+                    if (homepageInput.value.trim()) {
+                        contact.homepage = homepageInput.value.trim();
+                        hasContact = true;
+                    }
+                    if (qqInput.value.trim()) {
+                        contact.qq = qqInput.value.trim();
+                        hasContact = true;
+                    }
+                    if (emailInput.value.trim()) {
+                        contact.email = emailInput.value.trim();
+                        hasContact = true;
+                    }
+                    if (discordInput.value.trim()) {
+                        contact.discord = discordInput.value.trim();
+                        hasContact = true;
+                    }
+                    
+                    if (hasContact) {
+                        jsonData.contact = contact;
+                    }
+                }
+                
+                // 显示格式化的JSON
+                preview.textContent = JSON.stringify(jsonData, null, 4);
+                showNotification('JSON生成成功！');
+            });
+            
+            // 下载JSON
+            downloadBtn.addEventListener('click', function() {
+                const jsonString = preview.textContent;
+                if (!jsonString || jsonString.trim() === '') {
+                    showNotification('请先生成JSON数据！', true);
+                    return;
+                }
+                
+                try {
+                    const blob = new Blob([jsonString], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'user-profile.json';
+                    document.body.appendChild(a);
+                    a.click();
+                    
+                    // 清理
+                    setTimeout(() => {
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                    }, 100);
+                    
+                    showNotification('文件下载成功！');
+                } catch (error) {
+                    showNotification('下载失败，请重试！', true);
+                    console.error('下载错误:', error);
+                }
+            });
+            
+            // 重置表单
+            resetBtn.addEventListener('click', function() {
+                nameInput.value = "";
+                roleInput.value = "";
+                avatarInput.value = "";
+                introInput.value = "";
+                homepageInput.value = "";
+                qqInput.value = "";
+                emailInput.value = "";
+                discordInput.value = "";
+                
+                // 重置作品集
+                worksContainer.innerHTML = `
+                    <div class="array-item">
+                        <button class="remove-btn"><i class="fas fa-times"></i></button>
+                        <div class="form-row">
+                            <label>作品标题</label>
+                            <input type="text" class="workTitle" placeholder="例如：我的第一个项目">
+                        </div>
+                        <div class="form-row">
+                            <label>作品链接</label>
+                            <input type="text" class="workUrl" placeholder="例如：https://example.com/project">
+                        </div>
+                    </div>
+                `;
+                
+                // 添加删除功能
+                worksContainer.querySelector('.remove-btn').addEventListener('click', function() {
+                    worksContainer.innerHTML = "";
+                });
+                
+                // 重置预览
+                preview.textContent = `{
+  "name": "",
+  "role": "",
+  "avatar": "",
+  "introduction": "",
+  "works": []
+}`;
+                
+                // 重置联系方式显示
+                showContactCheckbox.checked = true;
+                contactFields.classList.remove('collapsed');
+                
+                showNotification('表单已重置');
+            });
+            
+            // 显示通知
+            function showNotification(message, isError = false) {
+                notification.innerHTML = `
+                    <i class="fas ${isError ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i>
+                    <span>${message}</span>
+                `;
+                
+                if (isError) {
+                    notification.classList.add('error');
+                } else {
+                    notification.classList.remove('error');
+                }
+                
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+            
+            // 初始化删除按钮
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const item = this.closest('.array-item');
+                    if (item) {
+                        worksContainer.removeChild(item);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
