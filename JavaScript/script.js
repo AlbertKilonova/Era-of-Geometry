@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (isDarkMode) {
     document.body.classList.add('dark-mode');
     themeToggle.innerHTML = '<i class="material-icons">light_mode</i>';
-  }
+    document.documentElement.style.setProperty('--circle-color', '#e0e0e0');
+  } else {document.documentElement.style.setProperty('--circle-color', '#1f1f1f');}
   
   // 切换暗色模式
   themeToggle.addEventListener('click', function() {
@@ -23,9 +24,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.body.classList.contains('dark-mode')) {
       themeToggle.innerHTML = '<i class="material-icons">light_mode</i>';
       localStorage.setItem('darkMode', 'true');
+      document.documentElement.style.setProperty('--circle-color', '#e0e0e0');
     } else {
       themeToggle.innerHTML = '<i class="material-icons">dark_mode</i>';
       localStorage.setItem('darkMode', 'false');
+      document.documentElement.style.setProperty('--circle-color', '#1f1f1f');
     }
     
     // 添加波纹效果
