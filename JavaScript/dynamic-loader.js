@@ -416,7 +416,7 @@ function renderMemberCardAsImage(memberId) {
       if (member.contact.x) contactCount++;
       if (member.contact.discord) contactCount++;
     }
-    cardHeight += contactCount > 0 ? contactCount * 22 + 25 : 40;
+    cardHeight += contactCount > 0 ? contactCount * 22 + 50 : 40;
     
     // 添加顶部装饰区域高度
     cardHeight += 60;
@@ -571,8 +571,6 @@ function renderMemberCardAsImage(memberId) {
       currentY += 20;
       ctx.fillText("No contact information", padding, currentY);
     }
-    
-    currentY += 20;
     
     // 添加底部装饰
     const footerHeight = 30;
