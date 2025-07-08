@@ -563,6 +563,7 @@ function renderMemberCardAsImage(memberId) {
             ctx.fillText(line, padding, currentY);
           });
           hasContact = true;
+          currentY += 20;
         }
       }
     }
