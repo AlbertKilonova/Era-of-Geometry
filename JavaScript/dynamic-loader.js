@@ -416,10 +416,10 @@ function renderMemberCardAsImage(memberId) {
       if (member.contact.x) contactCount++;
       if (member.contact.discord) contactCount++;
     }
-    cardHeight += contactCount > 0 ? contactCount * 22 + 50 : 40;
+    cardHeight += contactCount > 0 ? contactCount * 22 + 50 : 80;
     
     // 添加顶部装饰区域高度
-    cardHeight += 60;
+    cardHeight += 80;
     
     // 设置Canvas尺寸（2倍分辨率）
     canvas.width = cardWidth * 2;
