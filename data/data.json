@@ -127,7 +127,18 @@
       "homepage": "https://static.pandapaint.net/pagesart/wap/#/usercenter?userId=11844047",
       "qq": "2454438250"
     }
-  }],
+  },
+  {
+    "name": "旬阳",
+    "role": "帅哥",
+    "avatar": "//q.qlogo.cn/g?b=qq&nk=2744283454&s=100",
+    "introduction": "我喜欢你",
+    "works": [],
+    "contact": {
+      "qq": "2744283454",
+      "email": "2744283454@qq.com"
+    }
+    }],
   "opus": [
   {
     "title": "下梯",
@@ -147,7 +158,8 @@
     "type": "video",
     "url": "//player.bilibili.com/player.html?isOutside=true&aid=114454318551254&bvid=BV1rCVqzREGV&cid=25795698526&p=1",
     "detailUrl": "https://b23.tv/D4DHQFD"
-  }],
+  }
+  ],
   "projects": [
   {
     "title": "云境小镇",
