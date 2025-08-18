@@ -7,7 +7,7 @@
   {
     "date": "2025年6月15日",
     "title": "网站已投入使用",
-    "content": "欢迎访问Era of Geometry官网。<br/>QQ外群: <a href=\"//qm.qq.com/q/bF3M8INiUg\">974871417</a>",
+    "content": "欢迎访问Era of Geometry官网。<br/>Q群: <a href=\"//qm.qq.com/q/bF3M8INiUg\">974871417</a>",
     "sticky": true
   },
   {
@@ -15,7 +15,14 @@
     "title": "审核标准",
     "content": "◆动画<br/>火柴人逐帧：有基本的流畅度，时长8秒，主要展示动作，特效掩盖动作的直接打回。<br/>MG动画：有想法，不套公式。<br/><br/>◆绘画<br/>暂无标准<br/><br/>◆编程<br/>做出基本交互功能，逻辑清晰，会基本的if for等<br/><br/>◆编曲<br/>暂无标准<br/><br/>◆剪辑<br/>会用关键帧，曲线，蒙版，有创意。<br/><br/>◇审核流程<br/>将自己的作品附联系方式发送至审核邮箱（当然也可以直接发送给审核员）<br/><br/>>动画/绘画等流媒体作品请打上水印并证明原创。<br/>>编程/编曲等作品请将源代码打包发送给审核员，将原创证明材料一并打包。<br/><br/>统一审核邮箱：<a href=\"mailto:contact@example.com?&subject=Era of Geometry审核\">Era_of_Geometry@outlook.com</a>",
     "sticky": true
-  }],
+  }, 
+  {
+    "date": "2025年8月18日",
+    "title": "登陆太初寰宇社团页",
+    "content": "社团首页通过审核登陆太初寰宇社团大全页，大家也可以去支持<a href=\"bianyuzhou.com\">[太初寰宇]</a>",
+    "sticky": false
+  }
+  ],
   "members": [
   {
     "name": "Albert Kilonova",
